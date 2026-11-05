@@ -24,10 +24,10 @@ a problem with a known answer on the same device and pipeline, is the error bar 
 Even this 3-qubit controlled case was hard. On real hardware we found:
 
 - the chip's error was **3×** what the simulator predicted;
-- the published readout error was 0.2%, but we measured **1.7%**;
+- the published readout error was 0.2%, but we measured **1.0%** on average (1.7% for reading 1 as 0);
 - the compiler can **silently delete** the extra gates that ZNE needs;
-- plain ZNE pushed the answer the **wrong way** at some inputs, and only twirling fixed it;
-- one qubit had drifted to **a tenth** of its published lifetime.
+- our plain ZNE pushed the answer the **wrong way** at one input, and IBM's twirled pipeline (resilience level 2) fixed it;
+- one qubit had drifted to **an eighth to a fifth** of its published lifetime.
 
 All of these would go unnoticed on a problem without a known answer. Chapter 7 turns the
 process into an 8-step workflow for teams taking differential equations (vibration, heat,
@@ -48,7 +48,7 @@ Training under noise is the open question for a next version.
 | 3. Error mitigation | How much does ZNE help, and what does it cost? | ZNE alone removes ~60%; with readout mitigation, ~100× less error in the best case (exact expectation values, known readout rate), 0 extra qubits |
 | 4. Error correction | Why doesn't QEC help this circuit today? | Surface-code threshold falls from ~14% to ~0.7% at circuit level; per-round Λ ≈ 6 in an idealized model; fault tolerance would need ~8,000 physical qubits |
 | 5. Trade-offs | When to choose QEM, QEC, or neither? | A decision guide, and the real cost of training on hardware: ~2 million circuits |
-| 6. Real hardware | What changes on `ibm_marrakesh`? | Manual ZNE fails on coherent errors; twirling + ZNE gives ~5× less error. A repetition code (d = 3, 5, 7) suppresses errors with Λ ≈ 4 per round despite a drifted qubit |
+| 6. Real hardware | What changes on `ibm_marrakesh`? | Manual ZNE does not help; IBM's twirled pipeline gives ~5× less error than raw. A repetition code (d = 3, 5, 7) suppresses bit-flip errors with Λ ≈ 4 per round (95% intervals ~3–5) despite a drifted qubit |
 | 7. Real problems | How do you take this to a client's problem? | Where these equations appear in industry, why the controlled case comes first, and an 8-step workflow from problem framing to a go / not-yet decision |
 
 Three findings people usually learn the hard way:
@@ -92,7 +92,8 @@ Chapter 6 are stored in `hardware_results.json` (job IDs included).
 .venv/bin/python hardware/idle_check.py --apikey-file path/to/apikey.json
 ```
 
-The key is read from the file and never stored.
+The key is read from the file and never stored. The stored results are a single session on one day; hardware drifts,
+so repeat on different days before treating any number as a property of the device.
 
 ## Tools
 
