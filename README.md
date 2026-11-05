@@ -9,14 +9,18 @@ actually buy and cost for it. Every claim is a number you can rerun.
 The algorithm is a Differentiable Quantum Circuit (DQC) that learns to solve
 y'' + 4y = 0 with no training data: the equation is the teacher.
 
+**Scope:** the circuit is trained on a noiseless simulator and noise is applied when evaluating
+the trained solution. Error correction is analyzed for this circuit, not applied to it.
+Training under noise is the open question for a next version.
+
 ## What you will learn
 
 | Chapter | Question | What the notebook finds |
 | --- | --- | --- |
 | 1. The algorithm | How does a circuit learn to solve an ODE? | Max error vs. cos(2x): 2×10⁻³, and why encoding x twice matters |
 | 2. Noise | What does real hardware do to the answer? | With IBM Heron calibration data, noise is 10× the model error. Budget: gates 46%, readout 37%, decoherence 18% |
-| 3. Error mitigation | How much does ZNE help, and what does it cost? | ZNE alone removes ~60%; with readout mitigation, ~100× less error, 0 extra qubits |
-| 4. Error correction | Why doesn't QEC help this circuit today? | Surface-code threshold falls from ~14% to ~0.7% at circuit level; fault tolerance would need ~8,000 physical qubits |
+| 3. Error mitigation | How much does ZNE help, and what does it cost? | ZNE alone removes ~60%; with readout mitigation, ~100× less error in the best case (exact expectation values, known readout rate), 0 extra qubits |
+| 4. Error correction | Why doesn't QEC help this circuit today? | Surface-code threshold falls from ~14% to ~0.7% at circuit level; per-round Λ ≈ 6 in an idealized model; fault tolerance would need ~8,000 physical qubits |
 | 5. Trade-offs | When to choose QEM, QEC, or neither? | A decision guide, and the real cost of training on hardware: ~2 million circuits |
 
 Three findings people usually learn the hard way:
