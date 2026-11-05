@@ -105,8 +105,6 @@ decoding).
 
 - [quantum-optimizer-selector](https://github.com/MaldoAlberto/quantum-optimizer-selector): an
   open benchmark on which circuit optimizer an AI should pick for each hardware target.
-- [QGSS 2026 Lab 2](https://github.com/qiskit-community/qgss-2026/blob/main/lab-2/QGSS2026_Lab2.ipynb):
-  noise, backends and benchmarking in Qiskit. This tutorial follows its structure and noise vocabulary.
 
 ## Feedback and contributions
 
