@@ -102,6 +102,11 @@ def calibration_snapshot(backend, qubits, edges):
     return {"qubits": props, "cz_error": cz}
 
 
+def qpu_seconds(job):
+    """QPU time charged for a finished job. job.usage() can read 0 right after completion; metrics are final."""
+    return job.metrics().get("usage", {}).get("qpu_charge_time_seconds") or job.usage()
+
+
 def pack(bool_array):
     return base64.b64encode(np.packbits(bool_array, axis=1).tobytes()).decode()
 
@@ -178,8 +183,8 @@ def main():
                 "xs": XS, "scales": SCALES, "shots": QEM_SHOTS,
                 "counts": {k: v for k, v in qem_counts.items() if k != "cal"},
                 "readout_calibration": {"prep0": qem_counts["cal"]["0"], "prep1": qem_counts["cal"]["1"]},
-                "quantum_seconds": jobs["qem"].usage()},
-        "qec": {"job_id": jobs["qec"].job_id(), "runs": qec_runs, "quantum_seconds": jobs["qec"].usage()},
+                "quantum_seconds": qpu_seconds(jobs["qem"])},
+        "qec": {"job_id": jobs["qec"].job_id(), "runs": qec_runs, "quantum_seconds": qpu_seconds(jobs["qec"])},
         "calibration": calibration_snapshot(backend, sorted(set(QEM_LAYOUT) | set(qec_qubits)),
                                             [(0, 1), (1, 2)]),
     }

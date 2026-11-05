@@ -58,7 +58,7 @@ def main():
     print("submitted", job.job_id())
     pub = job.result()[0]
     out = {"job_id": job.job_id(), "resilience_level": 2, "noise_factors": [1, 3, 5],
-           "evs": pub.data.evs.tolist(), "stds": pub.data.stds.tolist(), "quantum_seconds": job.usage()}
+           "evs": pub.data.evs.tolist(), "stds": pub.data.stds.tolist(), "quantum_seconds": job.metrics().get("usage", {}).get("qpu_charge_time_seconds") or job.usage()}
     results["estimator_level2"] = out
     with open(RESULTS, "w") as f:
         json.dump(results, f)

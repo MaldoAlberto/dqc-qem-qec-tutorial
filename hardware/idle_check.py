@@ -49,7 +49,7 @@ def main():
     survival = {str(d): np.round(pub.data.c.to_bool_array(order="little").mean(axis=0), 4).tolist()
                 for d, pub in zip(DELAYS_US, res)}
     results["idle_check"] = {"job_id": job.job_id(), "qubits": qubits, "delays_us": DELAYS_US, "shots": SHOTS,
-                             "p1_by_delay": survival, "quantum_seconds": job.usage()}
+                             "p1_by_delay": survival, "quantum_seconds": job.metrics().get("usage", {}).get("qpu_charge_time_seconds") or job.usage()}
     with open(RESULTS, "w") as f:
         json.dump(results, f)
     for i, q in enumerate(qubits):

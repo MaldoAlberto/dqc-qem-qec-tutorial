@@ -3,6 +3,7 @@ qiskit==2.6.2
 qiskit-aer==0.18.2
 qiskit-ibm-runtime==0.51.0
 stim==1.16.0
-pymatching
-matplotlib
-scipy
+pymatching==2.4.0
+numpy==2.4.6
+scipy==1.17.1
+matplotlib==3.11.2
