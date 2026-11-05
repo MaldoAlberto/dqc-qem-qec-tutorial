@@ -10,7 +10,8 @@ The algorithm is a Differentiable Quantum Circuit (DQC) that learns to solve
 y'' + 4y = 0 with no training data: the equation is the teacher.
 
 **Scope:** the circuit is trained on a noiseless simulator and noise is applied when evaluating
-the trained solution. Error correction is analyzed for this circuit, not applied to it.
+the trained solution. Error correction is analyzed for this circuit, not applied to it. Chapter 6 runs mitigation on
+the trained circuit and a repetition-code memory on a real IBM Heron processor.
 Training under noise is the open question for a next version.
 
 ## What you will learn
@@ -22,6 +23,7 @@ Training under noise is the open question for a next version.
 | 3. Error mitigation | How much does ZNE help, and what does it cost? | ZNE alone removes ~60%; with readout mitigation, ~100× less error in the best case (exact expectation values, known readout rate), 0 extra qubits |
 | 4. Error correction | Why doesn't QEC help this circuit today? | Surface-code threshold falls from ~14% to ~0.7% at circuit level; per-round Λ ≈ 6 in an idealized model; fault tolerance would need ~8,000 physical qubits |
 | 5. Trade-offs | When to choose QEM, QEC, or neither? | A decision guide, and the real cost of training on hardware: ~2 million circuits |
+| 6. Real hardware | What changes on `ibm_marrakesh`? | Manual ZNE fails on coherent errors; twirling + ZNE gives ~5× less error. A repetition code (d = 3, 5, 7) suppresses errors with Λ ≈ 4 per round despite a drifted qubit |
 
 Three findings people usually learn the hard way:
 
@@ -51,7 +53,19 @@ python3.11 -m venv .venv
 ```
 
 No IBM Quantum account, API key or cloud job. Hardware noise comes from `FakeMarrakesh`, an
-offline snapshot of a real IBM Heron processor's calibration.
+offline snapshot of a real IBM Heron processor's calibration, and the real-hardware results of
+Chapter 6 are stored in `hardware_results.json` (job IDs included).
+
+**Rerun Chapter 6 on your own account** (about 2 minutes of QPU time, fits the free Open Plan):
+
+```bash
+.venv/bin/python hardware/run_on_ibm.py --apikey-file path/to/apikey.json --dry-run   # inspect first
+.venv/bin/python hardware/run_on_ibm.py --apikey-file path/to/apikey.json
+.venv/bin/python hardware/estimator_zne.py --apikey-file path/to/apikey.json
+.venv/bin/python hardware/idle_check.py --apikey-file path/to/apikey.json
+```
+
+The key is read from the file and never stored.
 
 ## Tools
 
