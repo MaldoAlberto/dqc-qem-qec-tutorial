@@ -12,7 +12,7 @@ y'' + 4y = 0 with no training data: the equation is the teacher.
 **In plain words:** quantum computers make mistakes. This notebook takes a small quantum program
 whose correct answer we already know, runs it on simulators and on a real IBM quantum computer,
 and shows step by step how big the mistakes are, which tools reduce them, and what each tool
-costs. New to quantum? Every term is explained in the notebook's glossary, and each chapter starts
+costs. New to quantum? Every term is explained in the [glossary](GLOSSARY.md), and each chapter starts
 with a short plain-language summary.
 
 ## Why it matters for real problems
@@ -61,7 +61,7 @@ Three findings people usually learn the hard way:
 
 ## Who it is for
 
-Beginners (a glossary and plain-language summaries are included), developers and researchers who
+Beginners (a [glossary](GLOSSARY.md) and plain-language summaries are included), developers and researchers who
 want to go past a demo, and teams evaluating quantum hardware for a real problem. The aim is to
 move toward the question every application faces: what does it take to move from near-term
 hardware toward fault tolerance? It is a tutorial, not a challenge: nothing to grade, every
